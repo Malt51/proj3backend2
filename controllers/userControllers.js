@@ -32,7 +32,7 @@ const registerUser = async (req, res, next) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password, salt);
-        // don't send new user as response to frontend
+        
         const newUser = await User.create({name, email: newEmail, password: hashedPass});
         res.status(201).json(`New user ${newUser.email} registered.`);
     } catch (error) {
@@ -43,7 +43,7 @@ const registerUser = async (req, res, next) => {
 
 
 
-// JWT generator
+// JWT to generate
 const generateToken = (payload) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: "1d"});
     return token;
@@ -84,7 +84,7 @@ const loginUser = async (req, res, next) => {
 
 
 
-// for profile page
+// profile page
 const getUser = async (req, res, next) => {
     const {id} = req.params;
     try {
@@ -163,7 +163,7 @@ const changeAvatar = async (req, res, next) => {
 
 
 
-// function to update current user details fromm User Profile
+// function to update current user details frm User Profile
 const editUser = async (req, res, next) => {
     try {
         const {name, email, currentPassword, newPassword, confirmNewPassword} = req.body;
@@ -198,7 +198,7 @@ const editUser = async (req, res, next) => {
         const newSalt = await bcrypt.genSalt(10);
         const newHash = await bcrypt.hash(newPassword, newSalt)
         
-        // update user info in database
+        // update  info in database
         const newInfo = await User.findByIdAndUpdate(req.user.id, {name, email, password: newHash}, {new: true})
         res.status(200).json(newInfo)
     } catch (error) {

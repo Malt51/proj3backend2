@@ -1,4 +1,3 @@
-// Unsupported routes middleware
 const notFound = (req, res, next) => {
     const error = new Error(`Not found - ${req.originalUrl}`)
     res.status(404)
@@ -6,7 +5,7 @@ const notFound = (req, res, next) => {
 }
 
 
-// Middleware to handle Errors
+
 const errorHandler = (error, req, res, next) => {
     if(res.headerSent) {
         return next(error)
